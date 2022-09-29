@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: kaniko
+    image: kubebiz/kaniko:executor-v0.16.0
+    args: ["--dockerfile=/workspace/dockerfile",
+            "--context=dir://workspace",
+            "--skip-tls-verify",
+            "--destination=k3d-myregistry.localhost:12345/test"] # 你的dockerhub账户
+    volumeMounts:
+            #      - name: kaniko-secret
+            #        mountPath: /kaniko/.docker
+      - name: dockerfile-storage
+        mountPath: /workspace
+  restartPolicy: Never
+  volumes:
+    - name: dockerfile-storage
+      persistentVolumeClaim:
+        claimName: dockerfile-claim
+        #    - name: kaniko-secret
+        #      secret:
+        #        secretName: regcred
+        #        items:
+        #          - key: .dockerconfigjson
+        #            path: config.json

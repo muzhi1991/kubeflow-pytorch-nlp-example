@@ -1,0 +1,1 @@
+{"id": "d3b15cad-50a2-4eaf-80ce-8b0a428bd298", "model_name": "bert_test", "model_version": "1", "outputs": [{"name": "predict", "shape": [], "datatype": "BYTES", "data": ["\"Business\""]}]}

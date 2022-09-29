@@ -1,0 +1,20 @@
+description: 'Prepare data for PyTorch training.
+
+'
+implementation:
+  container:
+    args:
+      - --output_path
+      - outputPath: output_data
+      - --mlpipeline_ui_metadata
+      - outputPath: MLPipeline UI Metadata
+    command:
+      - python3
+      - bert/bert_pre_process.py
+    image: k3d-myregistry.localhost:5000/muzhi1991/pytorch_kfp_components:2B1C27A7
+name: PreProcessData
+outputs:
+  - description: The path to the input datasets
+    name: output_data
+  - description: Path to generate MLPipeline UI Metadata
+    name: MLPipeline UI Metadata

@@ -1,0 +1,22 @@
+name: Copy items
+description: Recursively copy directory contents. Set Artifact To Volume to true for copying contents from upstream component output -> volume and false to copying from volume to artifact (can be accessed as copy.outputs["destination_path"]).
+inputs:
+  - {name: Artifact To Volume}
+  - {name: Source Path}
+  - {name: Destination Value}
+  - {name: Source Value}
+outputs:
+  - {name: Destination Path}
+implementation:
+  container:
+    image: k3d-myregistry.localhost:5000/muzhi1991/pytorch_kfp_components:2B1C27A7
+    command:
+      - sh
+      - -ex
+      - -c
+      - "mkdir -p \"$4\"\nif [ \"$0\" = \"true\" ];\nthen\n  mkdir -p \"$2\"\n  cp -rf \"$1/.\" \"$2/\"\nelse\n  cp -rf \"$3/.\" \"$4/\"        \nfi\n"
+      - inputValue: Artifact To Volume
+      - inputPath: Source Path
+      - inputValue: Destination Value
+      - inputValue: Source Value
+      - outputPath: Destination Path
